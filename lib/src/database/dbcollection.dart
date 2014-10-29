@@ -8,19 +8,18 @@ class DbCollection {
   
   Future save(Map document, {WriteConcern writeConcern}) {
     var id;
-    bool createId = false;
+    
     if (document.containsKey("_id")) {
       id = document["_id"];
+      
       if (id == null) {
-        createId = true;
-      }
-    }
-    if (id != null) {
-      return update({"_id": id}, document, writeConcern: writeConcern);
-    } else {
-      if (createId) {
         document["_id"] = new ObjectId();
       }
+    }
+    
+    if (id != null) {
+      return update({"_id": id}, document, writeConcern: writeConcern, upsert: true);
+    } else {
       return insert(document, writeConcern: writeConcern);
     }
   }

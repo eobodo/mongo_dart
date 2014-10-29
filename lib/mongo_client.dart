@@ -273,7 +273,7 @@ class MongoClient {
   Future openDbInsertAll(List<Map> documents, {WriteConcern writeConcern}) {
     db = new Db('$uri\/${dbName}');
     collection = db.collection(collName);
-      
+     
     return db
       .open()
       .then((_) {
